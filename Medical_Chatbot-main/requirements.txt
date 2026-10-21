@@ -1,0 +1,15 @@
+streamlit
+pandas
+folium
+streamlit-folium
+openai
+python-dotenv
+streamlit-geolocation
+langchain
+langchain-classic
+langchain-openai
+langchain-community
+langchain-text-splitters
+unstructured
+faiss-cpu
+python-magic
