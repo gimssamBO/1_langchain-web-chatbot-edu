@@ -1,125 +1,174 @@
-# 2026년 전공분야 보수교육(융합) [IT직종]  
-## **LangChain으로 만드는 웹 기반 챗봇 실습**
+# 📚 문서 기반 RAG 챗봇
 
-본 저장소는 **민간직업훈련기관 정보기술분야 교·강사 대상 보수교육(융합) 과정**  
-「LangChain으로 만드는 웹 기반 챗봇 실습」의 교육자료 및 실습 예제 코드를 제공합니다.  
-LLM 기반 챗봇의 구조를 이해하고, LangChain·Streamlit을 활용해 실질적인 웹 챗봇을 구현하는 것을 목표로 합니다.
+회사 내부 문서(PDF)를 자동으로 색인하고, 자연어 질문에 **문서 근거**와 함께 답변하는 RAG(Retrieval-Augmented Generation) 챗봇입니다.
 
 ---
 
-## 교육 개요
+## 주요 기능
 
-| 구분 | 내용 |
-|------|------|
-| **교육구분** | 훈련 교·강사 보수교육(융합) |
-| **교육대상** | 민간직업훈련기관 종사자 (NCS 중분류 2001 정보기술분야 교·강사) |
-| **교육목표** | - LLM 기반 챗봇의 구조와 동작 원리 이해<br>- LangChain Expression Language(LCEL) 기반 챗봇 파이프라인 설계 및 구현<br>- 문서 임베딩 및 벡터DB(Chroma/FAISS) 활용 검색형 챗봇 제작<br>- Streamlit/Gradio로 웹 UI 구현 및 배포<br>- “나만의 챗봇” 기획·개발·시연 |
-| **교육수준** | 중급 |
-| **선수지식** | Python 기본 문법 (함수, 클래스, 모듈 사용법 등) |
-| **교육시간** | 총 12시간 |
-| **교육방법** | 집체 (이론 + 실습 중심) |
-| **평가방법** | 실습평가 (과제 제출) |
+| 기능             | 설명                                                     |
+| ---------------- | -------------------------------------------------------- |
+| 📄 PDF 자동 색인 | `data/docs/` 폴더의 PDF 전체를 자동으로 벡터 인덱싱      |
+| 🔍 RAG 검색      | 질문과 유사한 문서 청크 Top-4 검색 후 Gemini로 답변 생성 |
+| 📎 출처 표시     | 답변에 참고한 PDF 파일명과 페이지 번호 표시              |
+| 💬 대화 기억     | 최근 6턴 대화 이력 유지 (문맥 이어서 질문 가능)          |
+| 🏠 홈 이동       | 제목 클릭 시 첫 화면(대화 초기화)으로 이동               |
 
 ---
 
-## 주요 습득 역량
+## 색인 문서
 
-- **2001070504_20v1** 인공지능서비스 애플리케이션 개발  
-- **2001021508_21v1** 클라우드 네트워크 서비스 개발  
-- **2001070204_22v2** 인공지능 서비스 모델 기획  
-- **2001070508_20v1** 인공지능서비스 이행  
-
----
-
-## 교육 내용 요약
-
-| 단원명 | 학습시간 | 학습방법 | 주요 내용 |
-|---------|-----------|------------|-------------|
-| 과정소개 (목적) | 1 | 이론 | 과정 목표 및 결과물 소개, LLM 기반 챗봇 개요, LangChain 특징 |
-| 개발 환경 준비 | 1 | 이론/실습 | Python 환경, OpenAI API 키 세팅, LangChain 설치 및 기본 테스트 |
-| LangChain 기본 구조 | 1 | 이론/실습 | LCEL(LangChain Expression Language) 개념, PromptTemplate/Model/OutputParser 실습 |
-| LCEL 실습 | 3 | 실습 | 단순 Q&A 챗봇, 다양한 프롬프트 실습, 구조화된 출력(JSON), ConversationMemory 기반 대화형 챗봇 구현 |
-| 문서 기반 챗봇 | 2 | 실습 | 문서 로딩·분할, 임베딩 생성, 벡터DB(Chroma/FAISS), RetrievalQA 구성 |
-| 웹 UI 연동 및 배포 | 2 | 실습 | Streamlit/Gradio UI 제작, 로컬 테스트, Streamlit Cloud 배포 |
-| 최종 프로젝트 | 2 | 실습/평가 | “나만의 챗봇” 설계·구현·시연 (전공 Q&A, 문서 검색 등) |
-
----
-
-##  세부 시간표 (수업 진행 상황에 따라 바뀔 수 있음)
-
-| 일차 | 시간 | 주요 단원 | 학습 내용 | 방법 |
-|------|------|------------|------------|------|
-| 1일차 | 10:00–11:00 | 과정소개 | 과정 목표 및 LLM 개요 | 이론 |
-|  | 11:00–12:00 | 개발환경 준비 | Python·OpenAI 세팅, LangChain 설치 | 이론/실습 |
-|  | 13:00–17:00 | LCEL 실습 | 프롬프트 실습, 대화형 챗봇 구현, MCP 기초 | 실습 |
-| 2일차 | 09:00–12:00 | 문서 기반 챗봇 | 벡터DB 및 RetrievalQA 구현 | 실습 |
-|  | 13:00–15:00 | 웹 UI 연동·배포 | Streamlit UI 구성 및 배포 | 실습 |
-|  | 15:00–16:00 | 최종 프로젝트 | 개인 챗봇 제작 및 과제 제출 | 실습/평가 |
-
-## 실습 환경 준비
-
-본 과정의 모든 실습은 **Python 3.10 기반 Conda 가상환경**에서 진행됩니다.  
-원활한 실습 진행을 위해 아래 절차를 **사전에 반드시 완료**해 주시기 바랍니다.
-
-### 1. Anaconda 설치
-
-본 실습은 **Conda 기반 Python 가상환경**을 사용합니다.  
-아래 공식 페이지에서 운영체제(Windows / macOS / Linux)에 맞는 **Anaconda**를 먼저 설치해 주세요.
-
-Anaconda 공식 다운로드 페이지:  
-https://www.anaconda.com/download/success
-
-### 2. Conda 가상환경 생성 (Python 3.10)
-
-```bash
-conda create -n py310 python=3.10
+```
+data/docs/
+├── 환불교환정책.pdf
+├── 멤버십정책.pdf
+├── 제품매뉴얼_로봇청소기.pdf
+├── 제품매뉴얼_스마트워치.pdf
+└── 직원핸드북.pdf
 ```
 
-### 3. 가상환경 활성화
+PDF를 추가하거나 교체하면 앱 재시작 시 자동으로 재색인됩니다.
 
-```bash
-conda activate py310
-```
+---
 
-### 4. 실습에 필요한 패키지 설치
+## 로컬 실행
 
-본 저장소 루트 디렉터리에 포함된 `requirements.txt` 파일을 사용하여  
-실습에 필요한 모든 라이브러리를 설치합니다.
+### 1. 패키지 설치
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. VS Code 설치 (선택)
+### 2. API 키 설정
 
-본 과정의 실습은 Jupyter Notebook 또는 Visual Studio Code(VS Code)를 활용하여 진행됩니다.  
-원활한 실습과 코드 관리, 디버깅을 위해 **VS Code 사용을 권장**합니다.
+```bash
+cp .env.example .env
+```
 
-VS Code가 설치되어 있지 않은 경우, 아래 공식 홈페이지를 통해 설치해 주세요.
+`.env` 파일을 열어 Google API 키를 입력합니다.
 
-https://code.visualstudio.com/
+```env
+GOOGLE_API_KEY=발급받은_키_입력
+```
 
-## 교육 장소
+> Google AI Studio에서 무료 발급: https://aistudio.google.com/apikey
 
-**한국휴렛팩커드 교육센터**  
-서울특별시 서초구 서운로 220, 대지프라자 6층  
+### 3. 앱 실행
 
-**대중교통 안내**
-- 9호선/신분당선 **신논현역 9번 출구** → 직진 240m, 현대오일뱅크 좌회전 후 도미노피자 건물 6층  
-- 2호선 **강남역 9번 출구** → 버스(146, 341 또는 마을버스 11번) 2정거장, 도보 20분 내외  
-> 주차지원 불가
+```bash
+python -m streamlit run rag_chatbot.py
+```
 
----
-
-## 저작권 및 문의
-
-본 교육자료의 **무단 복제, 배포, 상업적 이용을 금지합니다.**  
-교육자료의 사용 허가나 기타 문의사항은 아래로 연락 바랍니다.  
-
-**문의:** `rlaalstn1504@naver.com`
+브라우저에서 http://localhost:8501 접속
 
 ---
 
-> © 2026. LangChain으로 만드는 웹 기반 챗봇 실습  
-> 본 자료는 훈련 교·강사 보수교육(융합) 과정 전용으로 제작되었습니다.  
-> All rights reserved.
+## GitHub 업로드
+
+### 1. Git 초기화 & 첫 커밋 (최초 1회)
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+```
+
+### 2. GitHub 레포지토리 연결
+
+GitHub에서 새 레포지토리 생성 후:
+
+```bash
+git remote add origin https://github.com/본인계정/agai-main.git
+git branch -M main
+git push -u origin main
+```
+
+### 3. 이후 변경사항 업로드
+
+```bash
+git add .
+git commit -m "변경 내용 설명"
+git push
+```
+
+> **주의:** `.env` 파일은 `.gitignore`에 등록되어 있어 API 키가 GitHub에 올라가지 않습니다.
+
+---
+
+## Streamlit Cloud 배포
+
+GitHub 레포가 준비된 후 아래 순서로 무료 웹 서비스를 배포할 수 있습니다.
+
+### 1. Streamlit Cloud 접속
+
+https://share.streamlit.io 에서 GitHub 계정으로 로그인
+
+### 2. 앱 생성
+
+**"Create app"** 클릭 후 아래와 같이 입력:
+
+| 항목           | 값                   |
+| -------------- | -------------------- |
+| Repository     | `본인계정/agai-main` |
+| Branch         | `main`               |
+| Main file path | `rag_chatbot.py`     |
+
+### 3. API 키 설정 (중요)
+
+**"Advanced settings" → Secrets** 탭에 입력:
+
+```toml
+GOOGLE_API_KEY = "발급받은_키_입력"
+```
+
+> `.env` 파일은 GitHub에 올라가지 않으므로 Secrets에서 대신 설정합니다.
+
+### 4. 배포
+
+**"Deploy!"** 클릭 → 1~3분 후 `https://xxx.streamlit.app` URL 발급
+
+### GitHub 레포 접근 권한 오류 시
+
+Streamlit Cloud가 레포를 찾지 못하면:
+
+1. Streamlit Cloud → **Settings → Connections → GitHub → Configure** 클릭
+2. `agai-main` 레포를 허용 목록에 추가
+
+---
+
+## 기술 스택
+
+- **LLM** — Google Gemini 2.5 Flash
+- **임베딩** — `models/gemini-embedding-001` (768차원)
+- **벡터 DB** — FAISS
+- **프레임워크** — LangChain + Streamlit
+- **PDF 처리** — PyPDF
+
+---
+
+## 프로젝트 구조
+
+```
+agai-main/
+├── rag_chatbot.py       # 메인 앱 (RAG + Streamlit UI)
+├── data/
+│   ├── docs/            # 색인 대상 PDF 문서
+│   └── ...              # 기타 실습 데이터
+├── .env.example         # 환경변수 예시 (복사 후 .env로 사용)
+├── requirements.txt     # 패키지 목록
+└── README.md
+```
+
+---
+
+## 사용 예시
+
+```
+Q: 환불 신청은 어떻게 하나요?
+A: 환불 신청은 구매일로부터 7일 이내에 고객센터를 통해 ...
+   📄 출처: 환불교환정책.pdf p.2
+
+Q: 로봇청소기 필터 청소 주기는?
+A: 헤파 필터는 2주에 한 번 청소를 권장하며 ...
+   📄 출처: 제품매뉴얼_로봇청소기.pdf p.5
+```
